@@ -1,4 +1,4 @@
-package info.firozansari.nested_recyclerview;
+package info.firozansari.nested_recyclerview.adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import info.firozansari.nested_recyclerview.R;
 import info.firozansari.nested_recyclerview.model.EventInformation;
 import info.firozansari.nested_recyclerview.model.Events;
 

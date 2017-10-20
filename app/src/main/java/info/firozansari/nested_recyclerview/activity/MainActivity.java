@@ -1,4 +1,4 @@
-package info.firozansari.nested_recyclerview;
+package info.firozansari.nested_recyclerview.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +18,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import info.firozansari.nested_recyclerview.R;
+import info.firozansari.nested_recyclerview.adapter.EventListParentAdapter;
 import info.firozansari.nested_recyclerview.model.EventDates;
 import info.firozansari.nested_recyclerview.model.EventInformation;
 import info.firozansari.nested_recyclerview.model.Events;
@@ -97,6 +99,9 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        } else  if (id == R.id.action_movie) {
+            MoviesActivity.start(this);
             return true;
         }
 

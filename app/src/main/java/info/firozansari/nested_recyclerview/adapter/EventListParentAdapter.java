@@ -1,4 +1,4 @@
-package info.firozansari.nested_recyclerview;
+package info.firozansari.nested_recyclerview.adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import info.firozansari.nested_recyclerview.R;
 import info.firozansari.nested_recyclerview.model.EventDates;
 import info.firozansari.nested_recyclerview.model.EventInformation;
 
