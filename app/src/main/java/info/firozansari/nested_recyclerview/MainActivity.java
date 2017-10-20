@@ -108,11 +108,11 @@ public class MainActivity extends AppCompatActivity {
 
     String jsonString = "{\n" +
             "    \"Id\" : \"1\",\n" +
-            "    \"Name\" : \"Ganesha\",\n" +
-            "    \"Location\" : \"Bengaluru\",\n" +
+            "    \"Name\" : \"Firoz Ansari\",\n" +
+            "    \"Location\" : \"Manchester\",\n" +
             "    \"Event info\" : [ \n" +
             "\t\t\t\t\t\t{\n" +
-            "\t\t\t\t\t\t\t\"Date\" : \"29-9-16\",\n" +
+            "\t\t\t\t\t\t\t\"Date\" : \"29-9-17\",\n" +
             "\t\t\t\t\t\t\t\"events\" : [ \n" +
             "\t\t\t\t\t\t\t\t\t\t\t{\n" +
             "\t\t\t\t\t\t\t\t\t\t\t\t\"eventId\" : \"1\",\n" +
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
             "\t\t\t\t\t\t\t\t\t\t]\n" +
             "\t\t\t\t\t\t}, \n" +
             "\t\t\t\t\t\t{\n" +
-            "\t\t\t\t\t\t\t\"Date\" : \"30-9-16\",\n" +
+            "\t\t\t\t\t\t\t\"Date\" : \"30-9-17\",\n" +
             "\t\t\t\t\t\t\t\"events\" : [ \n" +
             "\t\t\t\t\t\t\t\t\t\t\t{\n" +
             "\t\t\t\t\t\t\t\t\t\t\t\t\"eventId\" : \"3\",\n" +
