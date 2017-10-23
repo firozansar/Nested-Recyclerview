@@ -13,16 +13,10 @@ import android.view.ViewGroup;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.viewpagerindicator.CirclePageIndicator;
 
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -31,7 +25,7 @@ import info.firozansari.nested_recyclerview.R;
 import info.firozansari.nested_recyclerview.helper.BundleKey;
 import info.firozansari.nested_recyclerview.helper.Config;
 import info.firozansari.nested_recyclerview.helper.VerticalItemDecorator;
-import info.firozansari.nested_recyclerview.model.Endpoint;
+import info.firozansari.nested_recyclerview.helper.Endpoint;
 import info.firozansari.nested_recyclerview.model.Movie;
 
 

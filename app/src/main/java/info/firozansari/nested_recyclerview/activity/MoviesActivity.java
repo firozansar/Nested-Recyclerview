@@ -4,8 +4,12 @@ import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,9 +19,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SearchView;
-import android.widget.Toast;
-
-import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -32,8 +33,10 @@ import info.firozansari.nested_recyclerview.R;
 import info.firozansari.nested_recyclerview.adapter.MovieAdapter;
 import info.firozansari.nested_recyclerview.helper.BundleKey;
 import info.firozansari.nested_recyclerview.helper.Config;
+import info.firozansari.nested_recyclerview.helper.Loader;
 import info.firozansari.nested_recyclerview.helper.SearchSuggestionsProvider;
-import info.firozansari.nested_recyclerview.model.Endpoint;
+import info.firozansari.nested_recyclerview.helper.Endpoint;
+import info.firozansari.nested_recyclerview.helper.TopMovieLoader;
 import info.firozansari.nested_recyclerview.model.Movie;
 import info.firozansari.nested_recyclerview.model.RecyclerItem;
 
@@ -45,7 +48,6 @@ public class MoviesActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getName();
     private List<RecyclerItem> mItems;
-    private ProgressDialog mDialog;
     private GridLayoutManager mLayoutManager;
     private Map<String, String> mUrlParams;
     private String mEndpoint;
@@ -77,7 +79,6 @@ public class MoviesActivity extends AppCompatActivity {
 
         mCurrentPage = 1;
         mTotalPageSize = 1;
-        mDialog = new ProgressDialog(MoviesActivity.this);
         mItems = new ArrayList<>();
 
         setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
@@ -89,6 +90,8 @@ public class MoviesActivity extends AppCompatActivity {
                 return mItems.get(position) instanceof Movie ? 1 : 2;
             }
         });
+
+        mRecyclerView = findViewById(R.id.movie_recycler_view);
 
         // Set layout manager to recyclerView
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -111,12 +114,11 @@ public class MoviesActivity extends AppCompatActivity {
             initEndpointAndUrlParams(mCurrentPage);
         }
 
-        mDialog.setMessage(getString(R.string.loading_data));
-        mDialog.getWindow().setGravity(Gravity.CENTER);
-        mDialog.show();
         mAdapter = new MovieAdapter(MoviesActivity.this, mItems);
         mRecyclerView.setAdapter(mAdapter);
-        loadMovieList(false);
+        //loadMovieList(false);
+
+        getSupportLoaderManager().initLoader(Loader.TOP_MOVIE_LOADER_ID, Bundle.EMPTY, topMovieLoaderCallbacks);
     }
 
     private void initEndpointAndUrlParams(int page) {
@@ -158,11 +160,7 @@ public class MoviesActivity extends AppCompatActivity {
                         initEndpointAndUrlParams(++mCurrentPage);
                     }
 
-                    mDialog.setMessage(getString(R.string.loading_more_data));
-                    mDialog.getWindow().setGravity(Gravity.BOTTOM);
-                    mDialog.show();
-
-                    loadMovieList(true);
+                    //loadMovieList(true);
                 }
             }
         }
@@ -256,9 +254,6 @@ public class MoviesActivity extends AppCompatActivity {
                 Log.w(TAG, "Can't encode search query", e);
             }
             initSearchEndpointAndUrlParams(query);
-            mDialog.setMessage(getString(R.string.loading_more_data));
-            mDialog.getWindow().setGravity(Gravity.CENTER);
-            mDialog.show();
             loadSearchResults();
             mSearchView.clearFocus();
         }
@@ -296,4 +291,27 @@ public class MoviesActivity extends AppCompatActivity {
 */
         return true;
     }
+
+    private LoaderManager.LoaderCallbacks<List<Movie>> topMovieLoaderCallbacks = new LoaderManager.LoaderCallbacks<List<Movie>>() {
+        @Override
+        public android.support.v4.content.Loader<List<Movie>> onCreateLoader(int id, Bundle args) {
+            return new TopMovieLoader(MoviesActivity.this);
+        }
+
+        @Override
+        public void onLoadFinished(android.support.v4.content.Loader<List<Movie>> loader, List<Movie> movieList) {
+            if (movieList != null && movieList.size() > 0) {
+                mItems.clear();
+                mItems.addAll(movieList);
+                mAdapter.setRelatedItemsPosition(RecyclerView.NO_POSITION);
+                mAdapter.notifyDataSetChanged();
+            }
+        }
+
+        @Override
+        public void onLoaderReset(android.support.v4.content.Loader<List<Movie>> loader) {
+            // do nothing, preferring stale data over no data
+        }
+
+    };
 }

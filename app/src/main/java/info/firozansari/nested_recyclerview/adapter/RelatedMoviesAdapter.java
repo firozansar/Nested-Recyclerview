@@ -17,7 +17,7 @@ import info.firozansari.nested_recyclerview.R;
 import info.firozansari.nested_recyclerview.activity.MovieDetailActivity;
 import info.firozansari.nested_recyclerview.helper.BundleKey;
 import info.firozansari.nested_recyclerview.helper.ItemClickListener;
-import info.firozansari.nested_recyclerview.model.Endpoint;
+import info.firozansari.nested_recyclerview.helper.Endpoint;
 import info.firozansari.nested_recyclerview.model.Movie;
 import info.firozansari.nested_recyclerview.model.RecyclerListItem;
 

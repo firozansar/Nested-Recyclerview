@@ -2,6 +2,7 @@ package info.firozansari.nested_recyclerview.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,45 +12,51 @@ public class Movie implements RecyclerItem {
 
     @SerializedName("poster_path")
     private String posterPath;
-
     @SerializedName("adult")
     private boolean adult;
-
     @SerializedName("overview")
     private String overview;
-
     @SerializedName("release_date")
     private String releaseDate;
-
     @SerializedName("genre_ids")
-    private List<Integer> genreIds;
-
+    private List<Integer> genreIds = new ArrayList<Integer>();
     @SerializedName("id")
-    private long id;
-
+    private Integer id;
     @SerializedName("original_title")
     private String originalTitle;
-
     @SerializedName("original_language")
     private String originalLanguage;
-
     @SerializedName("title")
     private String title;
-
     @SerializedName("backdrop_path")
     private String backdropPath;
-
     @SerializedName("popularity")
-    private double popularity;
-
+    private Double popularity;
     @SerializedName("vote_count")
-    private int voteCount;
-
+    private Integer voteCount;
     @SerializedName("video")
-    private boolean video;
-
+    private Boolean video;
     @SerializedName("vote_average")
-    private double voteAverage;
+    private Double voteAverage;
+
+    public Movie(String posterPath, boolean adult, String overview, String releaseDate, List<Integer> genreIds, Integer id,
+                 String originalTitle, String originalLanguage, String title, String backdropPath, Double popularity,
+                 Integer voteCount, Boolean video, Double voteAverage) {
+        this.posterPath = posterPath;
+        this.adult = adult;
+        this.overview = overview;
+        this.releaseDate = releaseDate;
+        this.genreIds = genreIds;
+        this.id = id;
+        this.originalTitle = originalTitle;
+        this.originalLanguage = originalLanguage;
+        this.title = title;
+        this.backdropPath = backdropPath;
+        this.popularity = popularity;
+        this.voteCount = voteCount;
+        this.video = video;
+        this.voteAverage = voteAverage;
+    }
 
     public String getPosterPath() {
         return posterPath;
@@ -91,11 +98,11 @@ public class Movie implements RecyclerItem {
         this.genreIds = genreIds;
     }
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -131,36 +138,35 @@ public class Movie implements RecyclerItem {
         this.backdropPath = backdropPath;
     }
 
-    public double getPopularity() {
+    public Double getPopularity() {
         return popularity;
     }
 
-    public void setPopularity(double popularity) {
+    public void setPopularity(Double popularity) {
         this.popularity = popularity;
     }
 
-    public int getVoteCount() {
+    public Integer getVoteCount() {
         return voteCount;
     }
 
-    public void setVoteCount(int voteCount) {
+    public void setVoteCount(Integer voteCount) {
         this.voteCount = voteCount;
     }
 
-    public boolean isVideo() {
+    public Boolean getVideo() {
         return video;
     }
 
-    public void setVideo(boolean video) {
+    public void setVideo(Boolean video) {
         this.video = video;
     }
 
-    public double getVoteAverage() {
+    public Double getVoteAverage() {
         return voteAverage;
     }
 
-    public void setVoteAverage(int voteAverage) {
+    public void setVoteAverage(Double voteAverage) {
         this.voteAverage = voteAverage;
     }
-
 }

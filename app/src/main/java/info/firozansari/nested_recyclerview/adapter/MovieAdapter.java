@@ -14,10 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.google.gson.Gson;
-
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +29,7 @@ import info.firozansari.nested_recyclerview.helper.Helper;
 import info.firozansari.nested_recyclerview.helper.HorizontalItemDecorator;
 import info.firozansari.nested_recyclerview.helper.ItemClickListener;
 import info.firozansari.nested_recyclerview.helper.PushNotification;
-import info.firozansari.nested_recyclerview.model.Endpoint;
+import info.firozansari.nested_recyclerview.helper.Endpoint;
 import info.firozansari.nested_recyclerview.model.Movie;
 import info.firozansari.nested_recyclerview.model.PushService;
 import info.firozansari.nested_recyclerview.model.RecyclerItem;
