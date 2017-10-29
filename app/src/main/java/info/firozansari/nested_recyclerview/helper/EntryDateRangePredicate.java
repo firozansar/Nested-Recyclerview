@@ -1,7 +1,6 @@
 package info.firozansari.nested_recyclerview.helper;
 
 import com.android.internal.util.Predicate;
-import com.datonicgroup.narrate.app.models.Entry;
 
 import info.firozansari.nested_recyclerview.model.Events;
 

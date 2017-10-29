@@ -17,11 +17,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 import info.firozansari.nested_recyclerview.R;
 import info.firozansari.nested_recyclerview.adapter.EventListParentAdapter;
 import info.firozansari.nested_recyclerview.helper.EventDatePredicate;
-import info.firozansari.nested_recyclerview.helper.MutableArrayList;
 import info.firozansari.nested_recyclerview.model.EventDates;
 import info.firozansari.nested_recyclerview.model.EventInformation;
 import info.firozansari.nested_recyclerview.model.Events;
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView event_recycler_view_parent;
     EventListParentAdapter event_list_parent_adapter;
-    MutableArrayList<EventDates> eventDatesArrayList;
+    ArrayList<EventDates> eventDatesArrayList;
     EventDatePredicate mPredicate = new EventDatePredicate();
     EventInformation eventInformation = new EventInformation();
 
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             //pasing jason data
             JSONObject jsonObject = new JSONObject(jsonString);
             JSONArray jsonDatesArray = jsonObject.getJSONArray("Event info");
-            eventDatesArrayList = new MutableArrayList<>();
+            eventDatesArrayList = new ArrayList<>();
             for (int indexDates=0;indexDates<jsonDatesArray.length();indexDates++){
                 EventDates eventDates = new EventDates();
                 JSONObject jsonDateobject = jsonDatesArray.getJSONObject(indexDates);
@@ -145,12 +146,19 @@ public class MainActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.action_filter){
 
-            for ( int i = 0; i < eventDatesArrayList.size(); i++ ) {
+            /*for ( int i = 0; i < eventDatesArrayList.size(); i++ ) {
                 EventDates e = eventDatesArrayList.get(i);
                 if ( mPredicate.apply(e) ) {
                     eventDatesArrayList.add(e);
                 }
-            }
+            }*/
+
+            Consumer<EventDates> style = (EventDates e) -> Log.d("message",e.getDate());
+            //eventDatesArrayList.forEach(style); calls require api level 24
+            String date = "30";
+            Predicate<EventDates> predicate = p -> p.getDate().contains(date) ;
+            //eventDatesArrayList.removeIf(predicate); calls require api level 24
+
         }
 
         return super.onOptionsItemSelected(item);
