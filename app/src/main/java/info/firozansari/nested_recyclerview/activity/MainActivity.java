@@ -20,11 +20,53 @@ import java.util.ArrayList;
 
 import info.firozansari.nested_recyclerview.R;
 import info.firozansari.nested_recyclerview.adapter.EventListParentAdapter;
+import info.firozansari.nested_recyclerview.helper.EventDatePredicate;
+import info.firozansari.nested_recyclerview.helper.MutableArrayList;
 import info.firozansari.nested_recyclerview.model.EventDates;
 import info.firozansari.nested_recyclerview.model.EventInformation;
 import info.firozansari.nested_recyclerview.model.Events;
 
 public class MainActivity extends AppCompatActivity {
+
+    RecyclerView event_recycler_view_parent;
+    EventListParentAdapter event_list_parent_adapter;
+    MutableArrayList<EventDates> eventDatesArrayList;
+    EventDatePredicate mPredicate = new EventDatePredicate();
+    EventInformation eventInformation = new EventInformation();
+
+    String jsonString = "{\n" +
+            "    \"Id\" : \"1\",\n" +
+            "    \"Name\" : \"Firoz Ansari\",\n" +
+            "    \"Location\" : \"Manchester\",\n" +
+            "    \"Event info\" : [ \n" +
+            "\t\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\t\"Date\" : \"29-9-17\",\n" +
+            "\t\t\t\t\t\t\t\"events\" : [ \n" +
+            "\t\t\t\t\t\t\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\t\t\t\t\t\t\"eventId\" : \"11\",\n" +
+            "\t\t\t\t\t\t\t\t\t\t\t\t\"eventName\" : \"event one\"\n" +
+            "\t\t\t\t\t\t\t\t\t\t\t}, \n" +
+            "\t\t\t\t\t\t\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\t\t\t\t\t\t\"eventId\" : \"12\",\n" +
+            "\t\t\t\t\t\t\t\t\t\t\t\t\"eventName\" : \"event two\"\n" +
+            "\t\t\t\t\t\t\t\t\t\t\t}\n" +
+            "\t\t\t\t\t\t\t\t\t\t]\n" +
+            "\t\t\t\t\t\t}, \n" +
+            "\t\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\t\"Date\" : \"30-9-17\",\n" +
+            "\t\t\t\t\t\t\t\"events\" : [ \n" +
+            "\t\t\t\t\t\t\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\t\t\t\t\t\t\"eventId\" : \"3\",\n" +
+            "\t\t\t\t\t\t\t\t\t\t\t\t\"eventName\" : \"event three\"\n" +
+            "\t\t\t\t\t\t\t\t\t\t\t}, \n" +
+            "\t\t\t\t\t\t\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\t\t\t\t\t\t\"eventId\" : \"4\",\n" +
+            "\t\t\t\t\t\t\t\t\t\t\t\t\"eventName\" : \"event four\"\n" +
+            "\t\t\t\t\t\t\t\t\t\t\t}\n" +
+            "\t\t\t\t\t\t\t\t\t\t]\n" +
+            "\t\t\t\t\t\t}\n" +
+            "\t\t\t\t\t]\n" +
+            "}";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +84,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ArrayList<EventDates> eventDatesArrayList;
-        EventInformation eventInformation = new EventInformation();;
 
         try {
             //pasing jason data
             JSONObject jsonObject = new JSONObject(jsonString);
             JSONArray jsonDatesArray = jsonObject.getJSONArray("Event info");
-            eventDatesArrayList = new ArrayList<>();
+            eventDatesArrayList = new MutableArrayList<>();
             for (int indexDates=0;indexDates<jsonDatesArray.length();indexDates++){
                 EventDates eventDates = new EventDates();
                 JSONObject jsonDateobject = jsonDatesArray.getJSONObject(indexDates);
@@ -103,46 +143,19 @@ public class MainActivity extends AppCompatActivity {
         } else  if (id == R.id.action_movie) {
             MoviesActivity.start(this);
             return true;
+        } else if (id == R.id.action_filter){
+
+            for ( int i = 0; i < eventDatesArrayList.size(); i++ ) {
+                EventDates e = eventDatesArrayList.get(i);
+                if ( mPredicate.apply(e) ) {
+                    eventDatesArrayList.add(e);
+                }
+            }
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    RecyclerView event_recycler_view_parent;
-    EventListParentAdapter event_list_parent_adapter;
 
-    String jsonString = "{\n" +
-            "    \"Id\" : \"1\",\n" +
-            "    \"Name\" : \"Firoz Ansari\",\n" +
-            "    \"Location\" : \"Manchester\",\n" +
-            "    \"Event info\" : [ \n" +
-            "\t\t\t\t\t\t{\n" +
-            "\t\t\t\t\t\t\t\"Date\" : \"29-9-17\",\n" +
-            "\t\t\t\t\t\t\t\"events\" : [ \n" +
-            "\t\t\t\t\t\t\t\t\t\t\t{\n" +
-            "\t\t\t\t\t\t\t\t\t\t\t\t\"eventId\" : \"1\",\n" +
-            "\t\t\t\t\t\t\t\t\t\t\t\t\"eventName\" : \"event one\"\n" +
-            "\t\t\t\t\t\t\t\t\t\t\t}, \n" +
-            "\t\t\t\t\t\t\t\t\t\t\t{\n" +
-            "\t\t\t\t\t\t\t\t\t\t\t\t\"eventId\" : \"2\",\n" +
-            "\t\t\t\t\t\t\t\t\t\t\t\t\"eventName\" : \"event two\"\n" +
-            "\t\t\t\t\t\t\t\t\t\t\t}\n" +
-            "\t\t\t\t\t\t\t\t\t\t]\n" +
-            "\t\t\t\t\t\t}, \n" +
-            "\t\t\t\t\t\t{\n" +
-            "\t\t\t\t\t\t\t\"Date\" : \"30-9-17\",\n" +
-            "\t\t\t\t\t\t\t\"events\" : [ \n" +
-            "\t\t\t\t\t\t\t\t\t\t\t{\n" +
-            "\t\t\t\t\t\t\t\t\t\t\t\t\"eventId\" : \"3\",\n" +
-            "\t\t\t\t\t\t\t\t\t\t\t\t\"eventName\" : \"event three\"\n" +
-            "\t\t\t\t\t\t\t\t\t\t\t}, \n" +
-            "\t\t\t\t\t\t\t\t\t\t\t{\n" +
-            "\t\t\t\t\t\t\t\t\t\t\t\t\"eventId\" : \"4\",\n" +
-            "\t\t\t\t\t\t\t\t\t\t\t\t\"eventName\" : \"event four\"\n" +
-            "\t\t\t\t\t\t\t\t\t\t\t}\n" +
-            "\t\t\t\t\t\t\t\t\t\t]\n" +
-            "\t\t\t\t\t\t}\n" +
-            "\t\t\t\t\t]\n" +
-            "}";
 
 }

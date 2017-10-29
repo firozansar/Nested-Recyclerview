@@ -17,4 +17,8 @@
         android:title="Movies"
         android:orderInCategory="200"
         app:showAsAction="never"/>
+    <item android:id="@+id/action_filter"
+        android:title="Filter"
+        android:orderInCategory="300"
+        app:showAsAction="never"/>
 </menu>
